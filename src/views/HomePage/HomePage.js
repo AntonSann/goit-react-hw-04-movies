@@ -4,13 +4,17 @@ import MovieDBApi from '../../services/MovieDBApi';
 
 class HomePage extends Component{
     state = {
-        movies:[]
+        movies:[],
+        error: false
     }
 
-async componentDidMount(){
+componentDidMount(){
     MovieDBApi
     .getTrending()
-    .then( movies => this.setState({movies: movies}))      
+    .then( movies => this.setState({movies: movies}))
+    .catch(error => {
+        this.setState({ error: true });
+      })      
 }
     render (){
         return (

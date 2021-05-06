@@ -13,7 +13,8 @@ class MovieDetailsPage extends Component {
         id: null,
         release_date: null,
         vote_average: null,
-        poster_path: ''
+        poster_path: '',
+        error: false
 }
 
 async componentDidMount() {
@@ -21,19 +22,20 @@ async componentDidMount() {
     
     MovieDBApi
     .getMovieDetails(movieId)
-    .then( movie => this.setState({...movie}))      
+    .then( movie => this.setState({...movie}))
+    .catch(error => {
+      this.setState({ error: true });
+    });      
 }
 
 handleButtonBack = () => {
     const { location, history } = this.props;
-
     history.push(location?.state?.from || routes.movies);
   };
     
     render () {
         const { title, genres, overview, release_date, vote_average, poster_path } = this.state;
         const { match, location } = this.props;
-        const from = location.state.from;
         return(
         
             <>
@@ -64,11 +66,11 @@ handleButtonBack = () => {
   <ul>
   <li><NavLink to={{
                 pathname: `${match.url}/cast`,
-                state: { from: from },
+                state: location.state,
               }}>Cast</NavLink></li>
   <li><NavLink to={{
                 pathname: `${match.url}/reviews`,
-                state: { from: from },
+                state: location.state,
               }}>Reviews</NavLink></li>
   </ul>
   <Suspense fallback={<div>Loading... </div>}>

@@ -3,14 +3,18 @@ import MovieDBApi from '../../services/MovieDBApi';
 
 class Cast extends Component {
     state = {
-cast: []
+      cast: [],
+      error: false
     }
 
     async componentDidMount(){
         const { movieId } = this.props.match.params;
         MovieDBApi
         .getMovieCredits(movieId)
-        .then( cast => this.setState({cast: cast}))      
+        .then( cast => this.setState({cast: cast}))
+        .catch(error => {
+          this.setState({ error: true });
+        });      
     }
 
     render() {

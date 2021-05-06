@@ -3,14 +3,18 @@ import MovieDBApi from '../../services/MovieDBApi';
 
 class Reviews extends Component {
     state = {
-        reviews: []
+        reviews: [],
+        error: false
     }
 
-    async componentDidMount(){
+    componentDidMount(){
         const { movieId } = this.props.match.params;
         MovieDBApi
         .getMovieReviews(movieId)
-        .then( reviews => this.setState({reviews: reviews}))      
+        .then( reviews => this.setState({reviews: reviews}))
+        .catch(error => {
+          this.setState({ error: true });
+        });      
     }
 
     render() {
