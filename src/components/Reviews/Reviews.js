@@ -3,8 +3,7 @@ import MovieDBApi from '../../services/MovieDBApi';
 
 class Reviews extends Component {
     state = {
-        reviews: [],
-        error: false
+        reviews: []
     }
 
     componentDidMount(){
@@ -12,9 +11,7 @@ class Reviews extends Component {
         MovieDBApi
         .getMovieReviews(movieId)
         .then( reviews => this.setState({reviews: reviews}))
-        .catch(error => {
-          this.setState({ error: true });
-        });      
+        .catch(error => console.log(error));      
     }
 
     render() {

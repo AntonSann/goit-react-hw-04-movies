@@ -13,8 +13,7 @@ class MovieDetailsPage extends Component {
         id: null,
         release_date: null,
         vote_average: null,
-        poster_path: '',
-        error: false
+        poster_path: ''
 }
 
 async componentDidMount() {
@@ -23,9 +22,7 @@ async componentDidMount() {
     MovieDBApi
     .getMovieDetails(movieId)
     .then( movie => this.setState({...movie}))
-    .catch(error => {
-      this.setState({ error: true });
-    });      
+    .catch(error => console.log(error));      
 }
 
 handleButtonBack = () => {

@@ -11,7 +11,6 @@ class MoviesPage extends Component {
         currentPage: 1,
         searchQuery: '',
         isLoading: false,
-        error: null,
         showModal: false,
         largeImage: '',
       }
@@ -33,10 +32,7 @@ class MoviesPage extends Component {
         }
     }
 
-    fetchMoviesList = () => {
-        //const { currentPage, searchQuery } = this.state;
-        //const options = { searchQuery, currentPage };
-    
+    fetchMoviesList = () => {    
         this.setState({ isLoading: true });
     
         MovieDBApi.searchMovies(this.state.searchQuery)
@@ -47,15 +43,14 @@ class MoviesPage extends Component {
             }));
             
           })
-          .catch(error => this.setState({ error }))
+          .catch(error => console.log(error))
           .finally(() => this.setState({ isLoading: false }));
       };
 
     onChangeQuery = query => {
         this.setState({
           movies: [],
-          searchQuery: query,      
-          error: null,
+          searchQuery: query
         });
         this.props.history.push({
           pathname: this.props.history.pathname,
